@@ -1,0 +1,21 @@
+{
+  "name": "uawc7-intro",
+  "version": "0.0.0",
+  "authors": [
+    "Artyom 'Sleepwalker' Fedosov <mail@asleepwalker.ru>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "backbone": "~1.1.2",
+    "html5shiv": "~3.7.2",
+    "respond": "~1.4.2"
+  }
+}
