@@ -11,18 +11,18 @@
 	</head>
 	<body>
 		<div id="stage" class="message">
-			<p>Тест на уровень психической солидности личности. Постарайтесь быть объективны.</p>
+			<p class="message">Тест на уровень психической солидности личности. Постарайтесь быть объективны.</p>
 			<button class="start">Начать</button>
 		</div>
 
 		<script id="question" type="text/template">
-			<%= text %>
+			<p class="question"><%= text %></p>
 			<ul class="options"></ul>
-			<button class="next">Дальше</button>
 		</script>
 
 		<script id="result" type="text/template">
-			<%= text %>
+			<p class="message"><%= text %></p>
+			<p class="author">— Профессор гуманитарных наук и доцент кафедры академической гадания по кофейной гуще Федосов А.С.</p>
 		</script>
 
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>

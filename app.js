@@ -14,35 +14,66 @@ $(function() {
 			Backbone.Model.apply(this, arguments);
 		},
 		getCurrentNode: function() {
-			return { id: 1, text: 'Задание первое.' };
+			return this.nodes.get(this.get('question'));
 		},
 		getAvailableOptions: function() {
-			return [];
+			return this.links.where({ source: this.get('question') });
+		},
+		setQuestion: function(id) {
+			var target = this.nodes.get(id);
+			this.set('question', target.get('id'));
+			if (target.get('type') == 'result') {
+				this.set('step', 'result');
+			}
+		}
+	});
+
+	var OptionView = Backbone.View.extend({
+		tagName: 'li',
+		template: _.template('<button><%= text %></button>'),
+		events: {
+			'click button': 'selectOption',
+		},
+		initialize: function(params) {
+			this.option = params.option;
+			this.render();
+			return this;
+		},
+		selectOption: function() {
+			this.model.setQuestion(this.option.get('target'));
+		},
+		render: function() {
+			this.$el.html(this.template(this.option.toJSON()));
 		}
 	});
 
 	var PollView = Backbone.View.extend({
 		template: _.template($('#question').html()),
 		events: {
-			'click button.next': 'selectOption'
+			'click button': 'selectOption'
 		},
 		initialize: function() {
 			this.model.bind('change:question', _.bind(this.render, this));
-		},
-		selectOption: function() {
-			
+			this.render();
 		},
 		render: function() {
 			var question = this.model.getCurrentNode(),
 				options = this.model.getAvailableOptions();
-			this.$el.html(this.template(_.extend(question, options)));
+			this.$el.html(this.template(question.toJSON()));
+			_.each(options, function(option) {
+				var optionView = new OptionView({ model: this.model, option: option });
+				this.$el.find('.options').append(optionView.el);
+			}, this);
 		}
 	});
 
 	var ResultView = Backbone.View.extend({
 		template: _.template($('#result').html()),
+		initialize: function() {
+			this.render();
+		},
 		render: function() {
-			this.$el.html(this.template(this.model.getCurrentNode()));
+			this.$el.html(this.template(this.model.getCurrentNode().toJSON()));
 		}
 	});
 
@@ -51,7 +82,7 @@ $(function() {
 		initialize: function(options) {
 			this.model.bind('change:step', _.bind(this.render, this));
 			this.$el.find('button.start').click(function() {
-				options.model.set({ step: 'poll' });
+				options.model.set('step','poll');
 			});
 		},
 		render: function() {
@@ -61,7 +92,6 @@ $(function() {
 						el: this.el,
 						model: this.model
 					});
-					pollView.render();
 					break;
 				}
 				case 'result': {
@@ -69,7 +99,6 @@ $(function() {
 						el: this.el,
 						model: this.model
 					});
-					resultView.render();
 				}
 			}
 		}
