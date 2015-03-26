@@ -3,6 +3,7 @@
 	<head>
 		<title>uawc7-intro</title>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<!--[if lt IE 9]>
 			<script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
@@ -10,18 +11,18 @@
 		<![endif]-->
 	</head>
 	<body>
-		<div id="stage" class="message">
-			<p class="message">Тест на уровень психической солидности личности. Постарайтесь быть объективны.</p>
+		<div id="stage">
+			<p>Тест на уровень психической солидности личности. Постарайтесь быть объективны.</p>
 			<button class="start">Начать</button>
 		</div>
 
 		<script id="question" type="text/template">
-			<p class="question"><%= text %></p>
+			<p><%= text %></p>
 			<ul class="options"></ul>
 		</script>
 
 		<script id="result" type="text/template">
-			<p class="message"><%= text %></p>
+			<p><%= text %></p>
 			<p class="author">— Профессор гуманитарных наук и доцент кафедры академической гадания по кофейной гуще Федосов А.С.</p>
 		</script>
 
